@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import FeedPage from "./page/feed/feed";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -13,13 +14,12 @@ const App = () => {
   const session = "a";
 
   return (
-    <HashRouter>
-      <Suspense fallback={loading}>
-        <Routes>
-          <Route path="/login" element={session ? <Login /> : <Login />} />
-        </Routes>
-      </Suspense>
-    </HashRouter>
+    <Suspense fallback={loading}>
+      <Routes>
+        <Route path="/login" element={session ? <Login /> : <Login />} />
+        <Route path="/feed" element={<FeedPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 
