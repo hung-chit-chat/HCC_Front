@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 // import PrivateRoute from "./utility/privateRoute";
@@ -58,19 +57,5 @@ const App = () => {
     </HashRouter>
   );
 };
-=======
-import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/home/HomePage";
-import FeedPage from "./pages/feed/FeedPage";
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/feed" element={<FeedPage />} />
-    </Routes>
-  );
-}
->>>>>>> eunwoo-front
 
 export default App;
