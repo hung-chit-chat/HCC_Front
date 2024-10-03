@@ -16,9 +16,10 @@ const Login = () => {
   return (
     <div className="flex h-screen">
       {/* 왼쪽 로그인 폼 */}
+
       <div className="w-1/2 bg-gray-100 flex flex-col justify-center px-12">
         <h2 className="text-3xl font-bold mb-4">
-          로그인하여 더 많은 귀여움 얻기
+          로그인하여 더 많은 귀여움 얻기 이름수정
         </h2>
         <p className="text-gray-600 mb-6">
           계정이 없으신가요?{" "}
