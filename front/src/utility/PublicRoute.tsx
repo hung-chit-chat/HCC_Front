@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PublicRoute = ({ session }) => {
   if (!session) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/feed" replace />;
   }
   return <Outlet />;
 };
