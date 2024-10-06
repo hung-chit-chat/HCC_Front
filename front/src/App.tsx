@@ -14,6 +14,8 @@ const Signup = React.lazy(() => import("./page/signup/signup"));
 const Shop = React.lazy(() => import("./page/shop/shop"));
 const ShopItem = React.lazy(() => import("./page/shop/shopItem"));
 const FeedPage = React.lazy(() => import("./page/feed/feed"));
+const Auction = React.lazy(() => import("./page/auction/auction"));
+const NotFound = React.lazy(() => import("./page/notPage"));
 
 const ShopLayout = () => {
   return (
@@ -32,10 +34,11 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={session ? <Login /> : <Login />} />
         <Route path="/feed" element={<FeedPage />} />
-
-        <Route path="/shop" element={<ShopLayout />}>
-          <Route index element={<Shop />} />
-          <Route path=":id" element={<ShopItem />} />{" "}
+        <Route path="*" element={<NotFound />} />
+        <Route path="/*" element={<ShopLayout />}>
+          <Route path="shop" element={<Shop />} />
+          <Route path="shop/:id" element={<ShopItem />} />
+          <Route path="auction" element={<Auction />} />
         </Route>
       </Routes>
     </Suspense>
