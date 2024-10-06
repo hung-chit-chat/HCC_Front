@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
 import { Route, Routes, useLocation, Navigate } from "react-router-dom";
-import FeedPage from "./page/feed/FeedPage";
 import Sidebar from "./components/layout/Siderbar";
+import Layout from "./components/layout/defaultLayout";
+import { Outlet } from "react-router-dom";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -17,6 +18,18 @@ const PlaygroundPage = React.lazy(
 const SearchPage = React.lazy(() => import("./page/search/SearchPage"));
 const FavoritePage = React.lazy(() => import("./page/favoriate/FavoritePage"));
 const ShopPage = React.lazy(() => import("./page/shop/ShopPage"));
+const Signup = React.lazy(() => import("./page/signup/signup"));
+const Shop = React.lazy(() => import("./page/shop/shop"));
+const ShopItem = React.lazy(() => import("./page/shop/shopItem"));
+const FeedPage = React.lazy(() => import("./page/feed/FeedPage"));
+
+const ShopLayout = () => {
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
+};
 
 const App = () => {
   const location = useLocation();
