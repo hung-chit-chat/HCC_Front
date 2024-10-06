@@ -41,7 +41,7 @@ const App = () => {
       >
         <Suspense fallback={loading}>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={session ? <Login /> : <Login />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/playground" element={<PlaygroundPage />} />
