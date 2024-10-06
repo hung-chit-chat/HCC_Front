@@ -60,28 +60,28 @@ const App = () => {
         </Route>
       </Routes>
     </Suspense>
-    <div className="flex">
-      {!isLoginPage && <Sidebar />}
-      <main
-        className={`flex-1 ${
-          !isLoginPage ? "ml-[80px] md:ml-60" : ""
-        } p-4 transition-all duration-300`}
-      >
-        <Suspense fallback={loading}>
-          <Routes>
-            <Route path="/login" element={session ? <Login /> : <Login />} />
-            <Route path="/feed" element={<FeedPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/playground" element={<PlaygroundPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/favorite" element={<FavoritePage />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/" element={<Navigate to="/feed" replace />} />
-            <Route path="*" element={<Navigate to="/feed" replace />} />
-          </Routes>
-        </Suspense>
-      </main>
-    </div>
+    // <div className="flex">
+    //   {!isLoginPage && <Sidebar />}
+    //   <main
+    //     className={`flex-1 ${
+    //       !isLoginPage ? "ml-[80px] md:ml-60" : ""
+    //     } p-4 transition-all duration-300`}
+    //   >
+    //     <Suspense fallback={loading}>
+    //       <Routes>
+    //         <Route path="/login" element={session ? <Login /> : <Login />} />
+    //         <Route path="/feed" element={<FeedPage />} />
+    //         <Route path="/profile" element={<ProfilePage />} />
+    //         <Route path="/playground" element={<PlaygroundPage />} />
+    //         <Route path="/search" element={<SearchPage />} />
+    //         <Route path="/favorite" element={<FavoritePage />} />
+    //         <Route path="/shop" element={<ShopPage />} />
+    //         <Route path="/" element={<Navigate to="/feed" replace />} />
+    //         <Route path="*" element={<Navigate to="/feed" replace />} />
+    //       </Routes>
+    //     </Suspense>
+    //   </main>
+    // </div>
   );
 };
 
