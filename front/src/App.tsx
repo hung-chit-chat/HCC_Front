@@ -1,8 +1,10 @@
 import React, { Suspense } from "react";
 import { Route, Routes, useLocation, Navigate } from "react-router-dom";
-import Sidebar from "./components/layout/Siderbar";
+// import Sidebar from "./components/layout/Siderbar";
 import Layout from "./components/layout/defaultLayout";
 import { Outlet } from "react-router-dom";
+import PublicRoute from "./utility/PublicRoute";
+import PrivateRoute from "./utility/privateRoute";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -34,27 +36,37 @@ const ShopLayout = () => {
 };
 
 const App = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const session = "a";
-  const isLoginPage = location.pathname === "/login";
+  // const isLoginPage = location.pathname === "/login";
 
-  if (!session && !isLoginPage) {
-    return <Navigate to="/login" replace />;
-  }
+  // if (!session && !isLoginPage) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
-  if (isLoginPage && session) {
-    return <Navigate to="/feed" replace />;
-  }
+  // if (isLoginPage && session) {
+  //   return <Navigate to="/feed" replace />;
+  // }
 
   return (
     <Suspense fallback={loading}>
       <Routes>
+        <Route element={<PublicRoute session={session} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+        <Route element={<PrivateRoute session={session} />}></Route>
+        <Route path="/" element={<Navigate to="/feed" replace />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={session ? <Login /> : <Login />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/*" element={<ShopLayout />}>
           <Route path="shop" element={<Shop />} />
+          <Route path="playground" element={<PlaygroundPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="favorite" element={<FavoritePage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="shop/:id" element={<ShopItem />} />
           <Route path="auction" element={<Auction />} />
         </Route>

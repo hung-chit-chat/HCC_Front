@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({ session }) => {
+const PublicRoute = ({ session }) => {
   if (!session) {
     return <Navigate to="/login" replace />;
   }
   return <Outlet />;
 };
 
-export default PrivateRoute;
+export default PublicRoute;

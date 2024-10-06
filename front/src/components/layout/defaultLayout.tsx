@@ -1,6 +1,6 @@
 // components/Layout.tsx
 import React from "react";
-import Sidebar from "./sidebar/sidebar";
+import Sidebar from "./Siderbar";
 
 interface LayoutProps {
   children: React.ReactNode;
