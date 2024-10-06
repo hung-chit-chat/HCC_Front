@@ -1,5 +1,3 @@
-import React from "react";
-
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
