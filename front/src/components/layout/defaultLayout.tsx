@@ -1,27 +1,21 @@
-// import React, { useState } from "react";
-// import Sidebar from "../layout/sidebar/sidebar";
-// // import Content from "../layout/contents";
-// // import { Content, Sidebar, Header } from './index'
+// components/Layout.tsx
+import React from "react";
+import Sidebar from "./sidebar/sidebar";
 
-// const DefaultLayout = ({ visible, setVisible }) => {
-//   const [headerAlart, setHeaderAlart] = useState(false);
-//   return (
-//     <div>
-//       <Sidebar />
-//       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-//         <div>
-//           <Content
-//             headerAlart={headerAlart}
-//             visible={visible}
-//             setVisible={setVisible}
-//             setHeaderAlart={setHeaderAlart}
-//           />
-//         </div>
-//         <div className="footer-m" />
-//       </div>
-//       <div>aaa</div>
-//     </div>
-//   );
-// };
+interface LayoutProps {
+  children: React.ReactNode;
+}
 
-// export default DefaultLayout;
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  return (
+    <div className="min-h-scree">
+      <header className=" px-72 py-10 flex justify-start bg-violet-50">
+        <h1 className="text-center text-2xl">My Common Header</h1>
+      </header>
+      <Sidebar />
+      <main className="pl-72 pt-10 ">{children}</main>
+    </div>
+  );
+};
+
+export default Layout;
