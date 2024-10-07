@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-const ShopCard = ({ id }) => {
+const ShopCard = ({ id }: { id: number }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/shop/${id}`);
