@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoSearch, IoPersonCircleOutline } from "react-icons/io5";
@@ -9,7 +9,7 @@ import PostModal from "../PostModal";
 const linkClassName =
   "flex flex-col md:flex-row gap-1 md:gap-4 items-center justify-center md:justify-start py-2 px-4 hover:bg-purple-200 rounded-full w-full transition-colors duration-200";
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => setModalIsOpen(true);

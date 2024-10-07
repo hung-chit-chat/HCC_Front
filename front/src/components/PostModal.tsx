@@ -29,7 +29,7 @@ const customStyles = {
   },
 };
 
-const PostModal: React.FC<PostModalProps> = ({ isOpen, onRequestClose }) => {
+const PostModal = ({ isOpen, onRequestClose }: PostModalProps) => {
   const [contents, setContents] = useState("");
   const [publicScope, setPublicScope] = useState("PUBLIC");
   const [media, setMedia] = useState<File | null>(null);
@@ -38,7 +38,7 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onRequestClose }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("memberId", "your-member-id"); // 실제 memberId를 여기에 넣어주세요
+    formData.append("memberId", "your-member-id");
     formData.append("publicScope", publicScope);
     formData.append("contents", contents);
     if (media) {
