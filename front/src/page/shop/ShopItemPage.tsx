@@ -1,4 +1,16 @@
+import { useState } from "react";
+import LocationPopup from "../../components/popup/locationPopup";
+
 const ShopItem = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="flex flex-col justify-center items-center ">
       <img
@@ -10,9 +22,9 @@ const ShopItem = () => {
       <div className=" p-4 w-1/2  bg-white rounded-lg shadow-md">
         <div className="flex items-start">
           <img
-            src="/path/to/image.jpg"
+            src="/image/background.jpg"
             alt="Product"
-            className="w-24 h-24 rounded-lg object-cover"
+            className="w-24 h-24 rounded-full object-cover"
           />
           <div className="ml-4 flex-grow">
             <div className="flex justify-between items-start">
@@ -21,8 +33,12 @@ const ShopItem = () => {
                 <p className="text-sm text-gray-500">남구 서동</p>
               </div>
               <div className="text-right">
-                <p className="text-blue-500 font-bold">36.5°C</p>
-                <p className="text-sm text-gray-500">매너온도</p>
+                <button
+                  className="border-2 border-slate-300 py-4 px-6 rounded-lg"
+                  onClick={openModal}
+                >
+                  채팅하기
+                </button>
               </div>
             </div>
           </div>
@@ -52,6 +68,7 @@ const ShopItem = () => {
           <p>조회 1353</p>
         </div>
       </div>
+      <LocationPopup isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
