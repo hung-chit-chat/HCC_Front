@@ -34,7 +34,8 @@ const ShopLayout = () => {
 };
 
 const App = () => {
-  const session = "a";
+  const session = localStorage.getItem("token");
+
   // const isLoginPage = location.pathname === "/login";
 
   // if (!session && !isLoginPage) {
@@ -49,7 +50,7 @@ const App = () => {
     <Suspense fallback={loading}>
       <Routes>
         //로그인 필요 x
-        <Route element={<PublicRoute session={session} />}>
+        <Route element={<PublicRoute session={!!session} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
