@@ -20,8 +20,9 @@ const PlaygroundPage: React.FC = () => {
   const fetchPosts = useCallback(async () => {
     try {
       const res = await axios.get<PostData[]>(
-        `http://localhost:3000/feeds?_page=${page}&_limit=5`
+        `http://localhost:3000/feeds?offset=${page}&limit=5`
       );
+
       const newPosts = res.data;
       if (newPosts.length === 0) {
         setHasMore(false);
@@ -48,16 +49,16 @@ const PlaygroundPage: React.FC = () => {
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
+            <b>Sorry, You have seen it all</b>
           </p>
         }
         scrollThreshold={0.9}
         style={{ overflow: "hidden" }}
       >
         <div className="flex flex-col items-center">
-          {posts.map((post: PostData) => (
+          {posts.map((post: PostData, index: number) => (
             <Post
-              key={post.id}
+              key={`${post.id}-${index}`}
               memberId={post.memberId}
               publicScope={post.publicScope}
               date={new Date(post.createdAt).toLocaleDateString()}
