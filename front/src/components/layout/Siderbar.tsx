@@ -1,14 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { IoSearch, IoPersonCircleOutline } from "react-icons/io5";
 import { FaPlay, FaPlus } from "react-icons/fa6";
 import { CiShoppingBasket } from "react-icons/ci";
+import PostModal from "../PostModal";
 
 const linkClassName =
   "flex flex-col md:flex-row gap-1 md:gap-4 items-center justify-center md:justify-start py-2 px-4 hover:bg-purple-200 rounded-full w-full transition-colors duration-200";
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+
   return (
     <aside
       className="fixed top-0 left-0 bg-purple-100 h-screen p-2 md:p-4 overflow-y-auto
@@ -26,12 +32,12 @@ const Sidebar: React.FC = () => {
             </Link>
           </li>
           <li className="w-full flex justify-center">
-            <Link
-              to="/upload"
+            <button
+              onClick={openModal}
               className="flex bg-purple-500 hover:bg-purple-600 p-3 rounded-full transition-colors duration-200"
             >
               <FaPlus size={24} color="white" />
-            </Link>
+            </button>
           </li>
         </ul>
         <ul className="space-y-3 flex flex-col items-center w-full">
@@ -61,6 +67,7 @@ const Sidebar: React.FC = () => {
           </li>
         </ul>
       </nav>
+      <PostModal isOpen={modalIsOpen} onRequestClose={closeModal} />
     </aside>
   );
 };
