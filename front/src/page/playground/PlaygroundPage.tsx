@@ -1,73 +1,83 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
+import { useInView } from "react-intersection-observer";
+import { fetchPosts } from "../../hook/api/fetchPosts";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Post from "../../components/Post";
-import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 interface PostData {
   id: string;
-  memberId: string;
-  publicScope: string;
-  contents: string;
-  media: string;
-  createdAt: string;
+  title: string;
+  body: string;
+  userId: number;
+  tags: string[];
+  reactions: number;
 }
 
 const PlaygroundPage: React.FC = () => {
-  const [posts, setPosts] = useState<PostData[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [page, setPage] = useState<number>(1);
+  const { ref, inView } = useInView({
+    threshold: 0.5, // Increase threshold to trigger when more of the element is visible
+  });
 
-  const fetchPosts = useCallback(async () => {
-    try {
-      const res = await axios.get<PostData[]>(
-        `http://localhost:3000/feeds?offset=${page}&limit=5`
-      );
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["posts"],
+    queryFn: ({ pageParam = 0 }) => fetchPosts(pageParam),
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    initialPageParam: 0,
+  });
 
-      const newPosts = res.data;
-      if (newPosts.length === 0) {
-        setHasMore(false);
-      } else {
-        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-        setPage((prevPage) => prevPage + 1);
-      }
-    } catch (err) {
-      console.error(err);
-      setHasMore(false);
+  const loadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [page]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (inView) {
+      const timer = setTimeout(() => {
+        loadMore();
+      }, 300); // Add a small delay to prevent multiple rapid calls
+
+      return () => clearTimeout(timer);
+    }
+  }, [inView, loadMore]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {(error as Error).message}</div>;
+
+  const allPosts = data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
-    <main className="w-full min-h-screen">
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={fetchPosts}
-        hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Sorry, You have seen it all</b>
-          </p>
-        }
-        scrollThreshold={0.9}
-        style={{ overflow: "hidden" }}
-      >
-        <div className="flex flex-col items-center">
-          {posts.map((post: PostData, index: number) => (
-            <Post
-              key={`${post.id}-${index}`}
-              memberId={post.memberId}
-              publicScope={post.publicScope}
-              date={new Date(post.createdAt).toLocaleDateString()}
-              contents={post.contents}
-              media={post.media}
-            />
-          ))}
+    <main className="w-full">
+      <div className="flex flex-col items-center space-y-4">
+        {allPosts.map((post: PostData) => (
+          <Post
+            key={post.id}
+            memberId={post.userId.toString()}
+            publicScope="PUBLIC"
+            date={new Date().toLocaleDateString()}
+            contents={post.body}
+            media={`https://picsum.photos/seed/${post.id}/200`}
+          />
+        ))}
+      </div>
+      {(hasNextPage || isFetchingNextPage) && (
+        <div ref={ref} className="text-xl font-bold text-center py-4">
+          {isFetchingNextPage ? "Loading more..." : "Load more"}
         </div>
-      </InfiniteScroll>
+      )}
+      {!hasNextPage && !isFetchingNextPage && (
+        <div className="text-xl font-bold text-center py-4">
+          No more posts to load
+        </div>
+      )}
     </main>
   );
 };
