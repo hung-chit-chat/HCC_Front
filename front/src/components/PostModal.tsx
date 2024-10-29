@@ -6,6 +6,7 @@ import { FiX, FiImage, FiGlobe, FiUsers } from "react-icons/fi";
 interface PostModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  memberId: string;
 }
 
 const customStyles = {
@@ -29,7 +30,7 @@ const customStyles = {
   },
 };
 
-const PostModal = ({ isOpen, onRequestClose }: PostModalProps) => {
+const PostModal = ({ isOpen, onRequestClose, memberId }: PostModalProps) => {
   const [contents, setContents] = useState("");
   const [publicScope, setPublicScope] = useState("PUBLIC");
   const [media, setMedia] = useState<File | null>(null);
@@ -38,7 +39,7 @@ const PostModal = ({ isOpen, onRequestClose }: PostModalProps) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("memberId", "your-member-id");
+    formData.append("memberId", memberId);
     formData.append("publicScope", publicScope);
     formData.append("contents", contents);
     if (media) {
@@ -51,8 +52,13 @@ const PostModal = ({ isOpen, onRequestClose }: PostModalProps) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Post created:", response.data);
-      onRequestClose();
+
+      if (response.data.result === "success") {
+        console.log("Post created successfully");
+        onRequestClose();
+      } else {
+        console.error("Error creating post:", response.data);
+      }
     } catch (error) {
       console.error("Error creating post:", error);
     }

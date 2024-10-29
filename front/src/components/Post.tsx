@@ -1,27 +1,42 @@
+import { memo } from "react";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
-const data = {
+interface DataProps {
+  memberId?: string;
+  publicScope?: string;
+  date?: string;
+  contents?: string;
+  media?: string;
+}
+
+const defaultData: Required<DataProps> = {
+  memberId: "defaultUser",
+  publicScope: "PUBLIC",
   date: "2024.07.21",
-  title: "Title",
-  content: "This is a post content",
-  imgUrl: "https://picsum.photos/200/300",
+  contents: "This is a default post content",
+  media: "https://picsum.photos/200/300",
 };
 
-export default function Post() {
+export default function Post({
+  memberId = defaultData.memberId,
+  publicScope = defaultData.publicScope,
+  date = defaultData.date,
+  contents = defaultData.contents,
+  media = defaultData.media,
+}: DataProps) {
   return (
     <main className="w-[380px] min-h-[420px] border px-4 my-10">
-      <div className="text-[15px] text-neutral-500">{data.date}</div>
+      <div className="text-[15px] text-neutral-500">{date}</div>
       <div className="flex justify-center items-center">
         <img
-          src={data.imgUrl}
+          src={media}
           alt="post image"
           className="w-full max-h-[420px] object-cover"
         />
       </div>
       <div className="my-[10px]">
-        <h1 className="text-2xl font-bold">{data.title}</h1>
-        <p className="text-[15px] text-neutral-500">{data.content}</p>
+        <p className="text-[15px] text-neutral-500">{contents}</p>
       </div>
       <div className="flex justify-between my-[20px]">
         <div className="flex gap-6 items-center">
